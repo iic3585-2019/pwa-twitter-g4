@@ -1,0 +1,10 @@
+body,
+html {
+  margin: 0;
+  font-family: "Raleway", sans-serif;
+}
+
+.hero-image {
+  height: 400px;
+  width: 100%;
+}
