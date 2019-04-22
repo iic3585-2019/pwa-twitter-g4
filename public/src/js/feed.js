@@ -74,8 +74,7 @@ function updateUI(data) {
 
 const url = "https://my-first-pwa-a099e.firebaseio.com/posts.json";
 let networkDataReceived = false;
-
-// So, you can store POST requests in the cache
+// cache, then network strategy
 fetch(url)
   .then(function(res) {
     return res.json();
@@ -90,22 +89,12 @@ fetch(url)
     updateUI(dataArray);
   });
 
-if ("caches" in window) {
-  caches
-    .match(url)
-    .then(response => {
-      if (response) {
-        return response.json();
-      }
-    })
-    .then(data => {
+if ("indexedDB" in window) {
+  console.log("indexDB available in browser");
+  readAllData("posts").then(data => {
+    if (!networkDataReceived) {
       console.log("From cache", data);
-      if (!networkDataReceived) {
-        let dataArray = [];
-        for (const key in data) {
-          dataArray.push(data[key]);
-        }
-        updateUI(dataArray);
-      }
-    });
+      updateUI(data);
+    }
+  });
 }

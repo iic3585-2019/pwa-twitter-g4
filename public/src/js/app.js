@@ -44,7 +44,7 @@ function createCard(content) {
   sharedPostsArea.appendChild(cardWrapper);
 }
 
-async function main() {
+async function onRequestNotificationButton() {
   const swRegistration = await registerServiceWorker();
   const permission = await requestNotificationPermission();
 

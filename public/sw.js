@@ -1,4 +1,7 @@
-const CACHE_STATIC_NAME = "static-v11";
+importScripts("/src/js/idb.js");
+importScripts("/src/js/utility.js");
+
+const CACHE_STATIC_NAME = "static-v16";
 const CACHE_DYNAMIC_NAME = "dynamic-v4";
 const STATIC_FILES = [
   "/", // think that you are caching requests
@@ -7,6 +10,8 @@ const STATIC_FILES = [
   "/src/images/share_home.jpg",
   "/src/js/app.js",
   "/src/js/feed.js",
+  "/src/js/idb.js",
+  "/src/js/utility.js",
   "/src/css/app.css",
   "/favicon.ico",
   "https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css",
@@ -82,11 +87,15 @@ self.addEventListener("fetch", function(event) {
   // If the fetch is for this url, save to dynamic cache
   if (event.request.url.indexOf(url) > -1) {
     event.respondWith(
-      caches.open(CACHE_DYNAMIC_NAME).then(cache => {
-        return fetch(event.request).then(res => {
-          cache.put(event.request, res.clone());
-          return res;
+      fetch(event.request).then(res => {
+        const clonedRes = res.clone();
+        clonedRes.json().then(data => {
+          // Save data to IndexDB
+          for (let key in data) {
+            writeData("posts", data[key]);
+          }
         });
+        return res;
       })
     );
   } else if (isInArray(event.request.url, STATIC_FILES)) {
