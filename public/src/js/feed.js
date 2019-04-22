@@ -37,12 +37,15 @@ function createCard(data) {
   const cardBody = document.createElement("div");
   cardBody.className = "card-body";
 
-  const cardTitle = document.createElement("h5");
-  cardTitle.textContent = data.title;
+  const textContainer = document.createElement("div");
+  textContainer.className = "text";
 
   const cardText = document.createElement("p");
   cardText.className = "card-text";
   cardText.textContent = data.location;
+
+  const cardTitle = document.createElement("h5");
+  cardTitle.textContent = data.title;
 
   const cardButton = document.createElement("button");
   cardButton.classList.add("btn", "btn-primary");
@@ -50,8 +53,9 @@ function createCard(data) {
   cardButton.addEventListener("click", onSaveButtonClick);
 
   cardBody.appendChild(cardImage);
-  cardBody.appendChild(cardTitle);
-  cardBody.appendChild(cardText);
+  textContainer.appendChild(cardText);
+  textContainer.appendChild(cardTitle);
+  cardBody.appendChild(textContainer);
   // cardBody.appendChild(cardButton);
 
   cardWrapper.appendChild(cardBody);
