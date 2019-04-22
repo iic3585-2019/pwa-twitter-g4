@@ -49,7 +49,8 @@ async function onRequestNotificationButton() {
   if ("serviceWorker" in navigator && permission) {
     const options = {
       body: "You successfully subscribed to notifications",
-      icon: "/src/images/icons/app-icon-96x96.png"
+      icon: "/src/images/icons/app-icon-96x96.png",
+      tag: "confirm-notification"
     };
 
     navigator.serviceWorker.ready.then(serviceWorkerRegistration => {

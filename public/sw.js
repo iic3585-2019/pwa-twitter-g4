@@ -61,15 +61,6 @@ self.addEventListener("activate", function(event) {
     })
   );
   return self.clients.claim();
-
-  // try {
-  //   const options = {};
-  //   const subscription = await self.registration.pushManager.subscribe(options);
-
-  //   console.log(JSON.stringify(subscription));
-  // } catch (error) {
-  //   console.log("Error", error);
-  // }
 });
 
 function isInArray(string, array) {

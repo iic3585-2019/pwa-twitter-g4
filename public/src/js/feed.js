@@ -147,5 +147,6 @@ form.addEventListener("submit", function() {
     });
   } else {
     console.log("SyncManager not supported");
+    sendData();
   }
 });
