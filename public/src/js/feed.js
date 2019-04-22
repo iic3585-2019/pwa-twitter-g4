@@ -141,6 +141,11 @@ form.addEventListener("submit", function() {
         title: titleInput.value,
         location: "Santiago"
       };
+      const options = {
+        body: titleInput.value,
+        icon: "/src/images/icons/app-icon-96x96.png",
+        tag: "update-notification"
+      };
       // Save to IndexedDB
       writeData("sync-posts", post)
         .then(() => {
@@ -148,6 +153,10 @@ form.addEventListener("submit", function() {
           console.log("Successfully registered sync task");
         })
         .catch(err => console.log(err));
+      sw.showNotification(
+          "Update post",
+          post
+        );
     });
   } else {
     console.log("SyncManager not supported");

@@ -4,6 +4,10 @@ html {
   font-family: "Raleway", sans-serif;
 }
 
+p {
+  font-size: 10px;
+}
+
 .hero-image {
   display: block;
   margin-left: auto;
@@ -11,7 +15,7 @@ html {
 }
 
 .card-img-top {
-  width: 200px;
+  width: 150px;
 }
 
 .text {
