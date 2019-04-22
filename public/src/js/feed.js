@@ -74,7 +74,7 @@ function updateUI(data) {
   }
 }
 
-const url = "https://my-first-pwa-a099e.firebaseio.com/posts.json";
+const url = "https://quacker-g4.firebaseio.com/posts.json";
 let networkDataReceived = false;
 // cache, then network strategy
 fetch(url)
@@ -103,7 +103,7 @@ if ("indexedDB" in window) {
 
 // Directly send data to backend
 function sendData() {
-  fetch("https://my-first-pwa-a099e.firebaseio.com/posts.json", {
+  fetch("https://us-central1-quacker-g4.cloudfunctions.net/storePostData", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

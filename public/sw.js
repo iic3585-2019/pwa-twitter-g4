@@ -83,7 +83,7 @@ function isInArray(string, array) {
 }
 
 self.addEventListener("fetch", function(event) {
-  const url = "https://my-first-pwa-a099e.firebaseio.com/posts.json";
+  const url = "https://quacker-g4.firebaseio.com/posts.json";
   // If the fetch is for this url, save to dynamic cache
   if (event.request.url.indexOf(url) > -1) {
     event.respondWith(
@@ -134,25 +134,30 @@ self.addEventListener("sync", function(event) {
     event.waitUntil(
       readAllData("sync-posts").then(data => {
         for (let dt of data) {
-          fetch("https://my-first-pwa-a099e.firebaseio.com/posts.json", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-              Accept: "application/json"
-            },
-            body: JSON.stringify({
-              id: dt.id,
-              title: dt.title,
-              location: dt.location,
-              image:
-                "https://firebasestorage.googleapis.com/v0/b/my-first-pwa-a099e.appspot.com/o/sf-boat.jpg?alt=media&token=d5e491d0-f500-4b5c-9967-4d332f579e25"
-            })
-          })
+          fetch(
+            "https://us-central1-quacker-g4.cloudfunctions.net/storePostData",
+            {
+              method: "POST",
+              headers: {
+                "Content-Type": "application/json",
+                Accept: "application/json"
+              },
+              body: JSON.stringify({
+                id: dt.id,
+                title: dt.title,
+                location: dt.location,
+                image:
+                  "https://firebasestorage.googleapis.com/v0/b/my-first-pwa-a099e.appspot.com/o/sf-boat.jpg?alt=media&token=d5e491d0-f500-4b5c-9967-4d332f579e25"
+              })
+            }
+          )
             .then(res => {
               console.log("Sent data", res);
               if (res.ok) {
                 // delete item from IndexedDB
-                deleteItemFromData("sync-posts", dt.id);
+                res.json().then(resData => {
+                  deleteItemFromData("sync-posts", resData.id);
+                });
               }
             })
             .catch(err => console.log("Error sending data", err));
