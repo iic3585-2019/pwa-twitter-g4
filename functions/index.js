@@ -2,8 +2,15 @@ const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const cors = require("cors")({ origin: true });
 
+const serviceAccount = require("./quacker-key.json");
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+  databaseURL: "https://quacker-g4.firebaseio.com/"
+});
+
 exports.storePostData = functions.https.onRequest((request, response) => {
-  cors((request, response) => {
+  cors(request, response, () => {
     admin
       .database()
       .ref("posts")

@@ -10,8 +10,11 @@ async function requestNotificationPermission() {
   const permission = await window.Notification.requestPermission();
 
   if (permission !== "granted") {
-    throw new Error("Permission not granted for Notification");
+    console.log("No permission granted");
+    return;
   }
+
+  return permission;
 }
 
 function showLocalNotification(title, body, swRegistration) {
@@ -19,11 +22,6 @@ function showLocalNotification(title, body, swRegistration) {
 
   swRegistration.showNotification(title, options);
 }
-
-// function getCards() {
-//   const comments = db.collection('posts').get();
-//   comments.then(docs => docs.forEach(doc => createCard(doc.data().content)));
-// }
 
 function postComment() {
   const content = document.getElementById("body");
@@ -45,14 +43,22 @@ function createCard(content) {
 }
 
 async function onRequestNotificationButton() {
-  const swRegistration = await registerServiceWorker();
   const permission = await requestNotificationPermission();
 
-  showLocalNotification(
-    "Hello World",
-    "You have approved notifications",
-    swRegistration
-  );
+  // Confirm notification
+  if ("serviceWorker" in navigator && permission) {
+    const options = {
+      body: "You successfully subscribed to notifications",
+      icon: "/src/images/icons/app-icon-96x96.png"
+    };
+
+    navigator.serviceWorker.ready.then(serviceWorkerRegistration => {
+      serviceWorkerRegistration.showNotification(
+        "Successfully subscribed",
+        options
+      );
+    });
+  }
 }
 
 registerServiceWorker();
