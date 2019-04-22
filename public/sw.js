@@ -129,4 +129,35 @@ self.addEventListener("fetch", function(event) {
 
 self.addEventListener("sync", function(event) {
   console.log("[SW] Internet connection again", event);
+  if (event.tag === "sync-new-posts") {
+    console.log("[SW] Syncing new post");
+    event.waitUntil(
+      readAllData("sync-posts").then(data => {
+        for (let dt of data) {
+          fetch("https://my-first-pwa-a099e.firebaseio.com/posts.json", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json"
+            },
+            body: JSON.stringify({
+              id: dt.id,
+              title: dt.title,
+              location: dt.location,
+              image:
+                "https://firebasestorage.googleapis.com/v0/b/my-first-pwa-a099e.appspot.com/o/sf-boat.jpg?alt=media&token=d5e491d0-f500-4b5c-9967-4d332f579e25"
+            })
+          })
+            .then(res => {
+              console.log("Sent data", res);
+              if (res.ok) {
+                // delete item from IndexedDB
+                deleteItemFromData("sync-posts", dt.id);
+              }
+            })
+            .catch(err => console.log("Error sending data", err));
+        }
+      })
+    );
+  }
 });

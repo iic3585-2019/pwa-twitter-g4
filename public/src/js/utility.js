@@ -1,6 +1,6 @@
 /* Utility to access IndexDB */
 
-// For json data, we should prefer IndexDb
+// For json data, we should prefer IndexedDB
 const dbPromise = idb.open("posts-store", 1, function(db) {
   if (!db.objectStoreNames.contains("posts")) {
     db.createObjectStore("posts", { keyPath: "id" });
@@ -27,4 +27,17 @@ function readAllData(st) {
     const store = tx.objectStore(st);
     return store.getAll();
   });
+}
+
+function deleteItemFromData(st, id) {
+  dbPromise
+    .then(db => {
+      const tx = db.transaction(st, "readwrite");
+      const store = tx.objectStore(st);
+      store.delete(id);
+      return tx.complete;
+    })
+    .then(() => {
+      console.log("Item deleted");
+    });
 }

@@ -123,7 +123,7 @@ function sendData() {
 
 form.addEventListener("submit", function() {
   event.preventDefault();
-  if (bodyInput.nodeValue.trim() === "") {
+  if (titleInput.value.trim() === "") {
     alert("Please enter valid data");
     return;
   }
@@ -134,12 +134,13 @@ form.addEventListener("submit", function() {
     navigator.serviceWorker.ready.then(sw => {
       const post = {
         id: new Date().toISOString(),
-        title: titleInput.value
+        title: titleInput.value,
+        location: "Santiago"
       };
       // Save to IndexedDB
-      writeDate("sync-posts", post)
+      writeData("sync-posts", post)
         .then(() => {
-          sw.sync.register("sync-new-post");
+          sw.sync.register("sync-new-posts");
           console.log("Successfully registered sync task");
         })
         .catch(err => console.log(err));
