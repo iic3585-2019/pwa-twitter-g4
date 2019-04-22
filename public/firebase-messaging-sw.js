@@ -28,7 +28,7 @@ self.addEventListener("install", function(event) {
         "/",
         "/index.html",
         "/help/index.html",
-        "/src/images/trump.jpg",
+        "/src/images/share_home.jpg",
         "/src/js/app.js",
         "/src/css/app.css",
         "/favicon.ico",
