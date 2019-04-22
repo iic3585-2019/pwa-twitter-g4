@@ -1,59 +1,23 @@
-# PWA
+# PWA Quacker
 
-## What are PWA?
+Quacker es una aplicación web progresiva que permite compartir post con imágenes (por ahora la imagen está hardcodeada). Nuestra aplicación cuenta con las siguientes funcionalidades:
+1. Instalar la aplicación en el celular o computador
+2. Acceso offline
+3. Notificaciones push cuando se sube un post
 
-- Be **reliable**: Load fast and provide offline functionality
-- **Fast**: respond quickly to user actions
-- **Engaging**: feel like a native app
+## Aplicación web
+Se puede acceder a nuestra aplicación desde equipos móviles o de escritorio desde el siguiente [link](https://quacker-g4.firebaseapp.com/). Se recomienda usar Google Chrome.
 
-## Mobile web vs Native Apps
+## Aplicación local
 
-### Statistics
+Para probar la aplicación en forma local el primer paso es clonar el repositorio
 
-- 87% Native apps
-- 13% Mobile apps (web page in the browser)
+```
+git clone https://github.com/iic3585-2019/pwa-twitter-g4.git
+```
+Luego se debe acceder al repositorio local y ejecutar
 
-### Why mobile
-
-- Push Notifications bring Users back
-
-- Home Screen icons make easy
-
-- Access Native device features
-
-- Possibly work offline
-
-### Why not mobile
-
-- Learn two different languages
-
-### Do you really want to build a native app?
-
-- The average user install 0 new apps per month
-- The average app does not get that much time
-
-### PWA
-
-- You get the best from both worlds (the traditional web page and the mobile native app)
-
-# Core Building blocks
-
-## Service workers
-
-Allow caching, push notifications and background sync.
-
-## Application manifest
-
-Makes the application 'installable'
-
-## Geolocation API
-
-Access User Location
-
-## Media API
-
-Access device camera.
-
-## Service Worker support
-
-Go to [is service worker ready](https://jakearchibald.github.io/isserviceworkerready/)
+```
+npm install
+npm start
+```
