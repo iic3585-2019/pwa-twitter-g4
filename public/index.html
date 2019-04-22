@@ -15,6 +15,24 @@
           crossorigin="anonymous" />
     <link rel="stylesheet" href="/src/css/app.css" />
     <link rel="manifest" href="/manifest.json" />
+    <script src="https://www.gstatic.com/firebasejs/5.10.0/firebase.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/5.8.4/firebase-firestore.js"></script>
+    <script>
+        // Initialize Firebase
+        var config = {
+            apiKey: "AIzaSyAd8nwx5lKDUw8pNeeXk58jWcRn320vsbw",
+            authDomain: "quacker-g4.firebaseapp.com",
+            databaseURL: "https://quacker-g4.firebaseio.com",
+            projectId: "quacker-g4",
+            storageBucket: "quacker-g4.appspot.com",
+            messagingSenderId: "637295348911"
+        };
+        firebase.initializeApp(config);
+        const db = firebase.firestore();
+        
+    </script>
+    
 </head>
   <body>
       <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -42,9 +60,9 @@
 
       <div class="container">
           <div class="row">
-              <img src="/src/images/trump.jpg"
+              <img src="/src/images/share_home.jpg"
                    class="img-fluid hero-image"
-                   alt="Trump" />
+                   alt="Share it to the world!" />
           </div>
 
           <div class="row justify-content-center">
@@ -55,18 +73,18 @@
 
           <div class="row justify-content-center">
               <div class="create-post">
-                  <form>
-                      <div class="form-group">
-                          <label for="body">Post: </label>
-                          <input type="text"
-                                 class="form-control"
-                                 id="body"
-                                 placeholder="Enter body" />
-                      </div>
-                      <button id="post-btn" type="submit" class="btn btn-primary">
-                          Post!
-                      </button>
-                  </form>
+                  
+                    <div class="form-group">
+                        <label for="body">Post: </label>
+                        <input type="text"
+                                class="form-control"
+                                id="body"
+                                placeholder="Enter body" />
+                    </div>
+                    <button id="post-btn" onclick="postComment()" class="btn btn-primary">
+                        Post!
+                    </button>
+                  
               </div>
           </div>
       </div>

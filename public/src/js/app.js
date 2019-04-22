@@ -22,7 +22,7 @@ function showLocalNotification(title, body, swRegistration) {
   swRegistration.showNotification(title, options);
 }
 
-function createCard() {
+function createFixedCard() {
   const cardWrapper = document.createElement("div");
   cardWrapper.className = "card";
 
@@ -34,25 +34,51 @@ function createCard() {
   sharedPostsArea.appendChild(cardWrapper);
 }
 
-async function main() {
-  const swRegistration = await registerServiceWorker();
-  const permission = await requestNotificationPermission();
-
-  showLocalNotification(
-    "Hello World",
-    "You have approved notifications",
-    swRegistration
-  );
+function getCards() {
+  const comments = db.collection('posts').get();
+  comments.then(docs => docs.forEach(doc => createCard(doc.data().content)));
 }
 
-fetch("https://httpbin.org/get")
-  .then(function(res) {
-    return res.json();
-  })
-  .then(function(data) {
-    createCard();
-  });
+function postComment() {
+  const content = document.getElementById("body");  
+  db.collection('posts').add({ content: content.value });
+  createCard(content.value);
+  content.value = '';
+}
 
-registerServiceWorker();
+function createCard(content) {
+  const cardWrapper = document.createElement("div");
+  cardWrapper.className = "card";
 
-// main();
+  const cardBody = document.createElement("div");
+  cardBody.className = "card-body";
+  cardBody.textContent = content;
+
+  cardWrapper.appendChild(cardBody);
+  sharedPostsArea.appendChild(cardWrapper);
+}
+
+async function main() {  
+  const swRegistration = await registerServiceWorker();
+
+  getCards();
+  // const permission = await requestNotificationPermission();
+
+  // showLocalNotification(
+  //   "Hello World",
+  //   "You have approved notifications",
+  //   swRegistration
+  // );
+}
+
+// fetch("https://httpbin.org/get")
+//   .then(function(res) {
+//     return res.json();
+//   })
+//   .then(function(data) {
+//     createCard();
+//   });
+
+// registerServiceWorker();
+
+main();
