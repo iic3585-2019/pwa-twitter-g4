@@ -1,11 +1,12 @@
 {
-  "name": "My First App",
-  "short_name": "My App",
+  "name": "PWA Quacker",
+  "short_name": "Quacker",
   "start_url": ".",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#ccc",
   "theme_color": "#5FAAE5",
+  "gcm_sender_id": "103953800507",
   "icons": [
     {
       "src": "/src/images/icons/app-icon-96x96.png",
