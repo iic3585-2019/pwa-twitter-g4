@@ -69,7 +69,3 @@ async function main() {
 
 // registerServiceWorker();
 
-<<<<<<< HEAD
-=======
-main();
->>>>>>> 7f5d69f5598839349d1651aa155d0419e85eec60
