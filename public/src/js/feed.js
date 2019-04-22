@@ -1,4 +1,6 @@
 const sharedPostsArea = document.querySelector("#shared-posts");
+const form = document.querySelector("form");
+const titleInput = document.querySelector("#title");
 
 // Currently not in use, allows to save content to cache on demand
 function onSaveButtonClick(event) {
@@ -98,3 +100,51 @@ if ("indexedDB" in window) {
     }
   });
 }
+
+// Directly send data to backend
+function sendData() {
+  fetch("https://my-first-pwa-a099e.firebaseio.com/posts.json", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Accept: "application/json"
+    },
+    body: JSON.stringify({
+      id: new Date().toISOString(),
+      title: titleInput.value,
+      location: "Fixed location",
+      image:
+        "https://firebasestorage.googleapis.com/v0/b/my-first-pwa-a099e.appspot.com/o/sf-boat.jpg?alt=media&token=d5e491d0-f500-4b5c-9967-4d332f579e25"
+    })
+  }).then(res => {
+    console.log("Sent data", res);
+  });
+}
+
+form.addEventListener("submit", function() {
+  event.preventDefault();
+  if (bodyInput.nodeValue.trim() === "") {
+    alert("Please enter valid data");
+    return;
+  }
+
+  // Register background sync request
+  if ("serviceWorker" in navigator && "SyncManager" in window) {
+    // Check that sw is installed and activated
+    navigator.serviceWorker.ready.then(sw => {
+      const post = {
+        id: new Date().toISOString(),
+        title: titleInput.value
+      };
+      // Save to IndexedDB
+      writeDate("sync-posts", post)
+        .then(() => {
+          sw.sync.register("sync-new-post");
+          console.log("Successfully registered sync task");
+        })
+        .catch(err => console.log(err));
+    });
+  } else {
+    console.log("SyncManager not supported");
+  }
+});

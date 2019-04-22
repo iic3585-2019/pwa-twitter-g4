@@ -126,3 +126,7 @@ self.addEventListener("fetch", function(event) {
     );
   }
 });
+
+self.addEventListener("sync", function(event) {
+  console.log("[SW] Internet connection again", event);
+});
